@@ -1,3 +1,5 @@
+import org.springframework.cloud.contract.verifier.config.TestFramework
+
 buildscript {
 	ext {
 		springCloudContractVersion = '2.2.3.RELEASE'
@@ -30,7 +32,7 @@ dependencies {
 	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
 	useJUnitPlatform()
 }
 
@@ -49,7 +51,7 @@ sourceSets {
 	}
 }
 
-task integrationTest(type: Test) {
+tasks.register('integrationTest', Test) {
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
 }
@@ -58,7 +60,7 @@ integrationTest.shouldRunAfter test
 check.dependsOn integrationTest
 
 contracts {
-	testFramework = org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
+	testFramework = TestFramework.JUNIT5
 	baseClassForTests = 'pl.dziedziul.contractsincustomsourceset.ContractTestBase'
 	contractsDslDir = file("${project.rootDir}/src/integration-test/resources/contracts")
 	generatedTestSourcesDir = file("${project.buildDir}/generated-integration-test-sources/contracts")
