@@ -44,7 +44,9 @@ dependencies {
     testImplementation platform("org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractVersion}")
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 
-    contractTestImplementation sourceSets.integrationTest.output
+    contractTestImplementation(sourceSets.integrationTest.output) {
+        because 'contract test can not access the bast test class in the source set other than default test'
+    }
 }
 
 tasks.withType(Test).configureEach {
