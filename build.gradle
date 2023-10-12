@@ -55,12 +55,12 @@ integrationTest.shouldRunAfter test
 check.dependsOn integrationTest
 
 contracts {
-    testFramework = TestFramework.JUNIT5
+    testFramework = TestFramework.SPOCK
     sourceSet = 'integrationTest'
-    baseClassForTests = 'pl.dziedziul.contractsincustomsourceset.ContractSpringTestBase'
+    baseClassForTests = 'nz.lab.contract.base.ContractSpringTestBase'
     baseClassMappings {
-        baseClassMapping('mvc', 'pl.dziedziul.contractsincustomsourceset.ContractTestBase')
-        baseClassMapping('.*/mvc/.*', 'pl.dziedziul.contractsincustomsourceset.ContractTestBase')
+        baseClassMapping('mvc', 'nz.lab.contract.base.ContractTestBase')
+        baseClassMapping('.*/mvc/.*', 'nz.lab.contract.base.ContractTestBase')
     }
     contractsDslDir = file("${project.rootDir}/src/integration-test/resources/contracts")
 }
