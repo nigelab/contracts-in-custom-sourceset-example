@@ -24,6 +24,9 @@ configurations {
     integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntime.extendsFrom testRuntime
     integrationTestCompileOnly.extendsFrom compileOnly
+    contractTestImplementation.extendsFrom integrationTestImplementation
+    contractTestRuntimeOnly.extendsFrom integrationTestRuntimeOnly
+    contractTestCompileOnly.extendsFrom integrationTestCompileOnly
 }
 
 sourceSets {
@@ -41,8 +44,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    testImplementation platform("org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractVersion}")
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    integrationTestImplementation platform("org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractVersion}")
+    integrationTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 
     contractTestImplementation(sourceSets.integrationTest.output) {
         because 'contract test can not access the bast test class in the source set other than default test'
