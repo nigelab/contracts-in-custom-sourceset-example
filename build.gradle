@@ -12,6 +12,7 @@ plugins {
     id 'org.unbroken-dome.test-sets' version '4.0.0'
     id "io.freefair.lombok" version "8.4"
     id 'java'
+    id 'groovy'
 }
 
 group = 'pl.dziedziul'
@@ -37,6 +38,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
+    integrationTestImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
     integrationTestImplementation platform("org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractVersion}")
     integrationTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 
