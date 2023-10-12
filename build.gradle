@@ -55,7 +55,10 @@ check.dependsOn integrationTest
 contracts {
     testFramework = TestFramework.JUNIT5
     sourceSet = 'integrationTest'
-    baseClassForTests = 'pl.dziedziul.contractsincustomsourceset.ContractTestBase'
+    baseClassForTests = 'pl.dziedziul.contractsincustomsourceset.ContractSpringTestBase'
+    baseClassMappings {
+        baseClassMapping('.*/mvc/.*', 'pl.dziedziul.contractsincustomsourceset.ContractTestBase')
+    }
     contractsDslDir = file("${project.rootDir}/src/integration-test/resources/contracts")
 }
 
