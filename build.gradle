@@ -57,10 +57,11 @@ check.dependsOn integrationTest
 contracts {
     testFramework = TestFramework.SPOCK
     sourceSet = 'integrationTest'
-    baseClassForTests = 'nz.lab.contract.base.ContractSpringTestBase'
+    baseClassForTests = 'nz.lab.contract.base.BaseMockMvcSpec'
     baseClassMappings {
         baseClassMapping('mvc', 'nz.lab.contract.base.ContractTestBase')
         baseClassMapping('.*/mvc/.*', 'nz.lab.contract.base.ContractTestBase')
+        baseClassMapping('web', 'nz.lab.contract.base.ContractSpringTestBase')
     }
     contractsDslDir = file("${project.rootDir}/src/integration-test/resources/contracts")
 }
