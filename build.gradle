@@ -1,15 +1,15 @@
 import org.springframework.cloud.contract.verifier.config.TestFramework
 
 buildscript {
-	ext {
-		springCloudContractVersion = '3.1.8'
-	}
+    ext {
+        springCloudContractVersion = '3.1.8'
+    }
 }
 plugins {
-	id 'org.springframework.boot' version '2.7.16'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "org.springframework.cloud.contract" version "${springCloudContractVersion}"
-	id 'java'
+    id 'org.springframework.boot' version '2.7.16'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "org.springframework.cloud.contract" version "${springCloudContractVersion}"
+    id 'java'
 }
 
 group = 'pl.dziedziul'
@@ -17,55 +17,53 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '14'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 configurations {
-	integrationTestImplementation.extendsFrom testImplementation
-	integrationTestRuntime.extendsFrom testRuntime
-	integrationTestCompileOnly.extendsFrom compileOnly
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntime.extendsFrom testRuntime
+    integrationTestCompileOnly.extendsFrom compileOnly
 }
 
 sourceSets {
-	integrationTest {
-		java.srcDirs = ['src/integration-test/java']
-		resources.srcDir file('src/integration-test/resources')
-		compileClasspath += main.output + test.output
-		runtimeClasspath += main.output + test.output
-	}
+    integrationTest {
+        java.srcDirs = ['src/integration-test/java']
+        resources.srcDir file('src/integration-test/resources')
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
 }
 
 dependencies {
-	annotationProcessor 'org.projectlombok:lombok'
-	compileOnly 'org.projectlombok:lombok'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	implementation platform("org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractVersion}")
-	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    testImplementation platform("org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractVersion}")
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 
-	contractTestImplementation sourceSets.integrationTest.output
+    contractTestImplementation sourceSets.integrationTest.output
 }
 
 tasks.withType(Test).configureEach {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 tasks.register('integrationTest', Test) {
-	testClassesDirs = sourceSets.integrationTest.output.classesDirs
-	classpath = sourceSets.integrationTest.runtimeClasspath
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
 }
 
 integrationTest.shouldRunAfter test
 check.dependsOn integrationTest
 
 contracts {
-	testFramework = TestFramework.JUNIT5
-	sourceSet = 'integrationTest'
-	baseClassForTests = 'pl.dziedziul.contractsincustomsourceset.ContractTestBase'
-	contractsDslDir = file("${project.rootDir}/src/integration-test/resources/contracts")
+    testFramework = TestFramework.JUNIT5
+    sourceSet = 'integrationTest'
+    baseClassForTests = 'pl.dziedziul.contractsincustomsourceset.ContractTestBase'
+    contractsDslDir = file("${project.rootDir}/src/integration-test/resources/contracts")
 }
 
 
