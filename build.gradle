@@ -27,10 +27,8 @@ testSets {
 }
 
 configurations {
-    integrationTestCompileOnly.extendsFrom compileOnly
     contractTestImplementation.extendsFrom integrationTestImplementation
     contractTestRuntimeOnly.extendsFrom integrationTestRuntimeOnly
-    contractTestCompileOnly.extendsFrom integrationTestCompileOnly
 }
 
 dependencies {
